@@ -32,7 +32,7 @@ export const Layout: React.FC<LayoutProps> = ({
   // Define menu items
   const allItems = {
     academy: { id: 'academy', label: 'Academy & Simulador', icon: GraduationCap },
-    strategy: { id: 'strategy', label: 'Estrategia y Alertas', icon: Compass },
+    strategy: { id: 'strategy', label: 'Estrategia de clientes', icon: Compass },
     presales: { id: 'presales', label: 'Preventa y Licitaciones', icon: Briefcase },
     dashboard: { id: 'dashboard', label: 'Dashboard & Métricas', icon: LayoutDashboard },
     blog: { id: 'blog', label: 'Blog & Insights', icon: BookOpen },
@@ -41,8 +41,8 @@ export const Layout: React.FC<LayoutProps> = ({
   // Define navigation order based on role
   let navItems = [];
 
-  if (userRole === 'student') {
-    // Student: Academy -> Blog
+  if (userRole === 'external') {
+    // External: Academy -> Blog
     navItems = [allItems.academy, allItems.blog];
   } else {
     // Employee: Academy -> Strategy -> Presales -> Dashboard
@@ -59,8 +59,8 @@ export const Layout: React.FC<LayoutProps> = ({
       {/* Sidebar */}
       <aside className="w-64 bg-slate-900 text-white flex flex-col shadow-xl z-10">
         <div className="p-6 border-b border-slate-700">
-          <h1 className="text-xl font-bold tracking-tight text-blue-400">GovStrategy</h1>
-          <span className="text-xs text-slate-400 uppercase tracking-widest">Nexus Platform</span>
+          <h1 className="text-xl font-bold tracking-tight text-blue-400">SendApp</h1>
+          <span className="text-xs text-slate-400 uppercase tracking-widest">Platform</span>
         </div>
         
         <nav className="flex-1 py-6 space-y-2 px-3">
@@ -85,7 +85,7 @@ export const Layout: React.FC<LayoutProps> = ({
              <span className="text-xs text-slate-500 uppercase">Conectado como</span>
              <p className="text-sm font-bold text-white truncate">{username}</p>
              <span className="text-xs text-blue-400 capitalize bg-blue-900/30 px-2 py-0.5 rounded-full border border-blue-900/50">
-               {userRole === 'student' ? 'Estudiante' : 'Empleado'}
+               {userRole === 'external' ? 'Externo' : 'Empleado'}
              </span>
           </div>
           <button 

@@ -24,7 +24,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-600 mb-4 shadow-lg">
             <Shield className="text-white" size={32} />
           </div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">GovStrategy Nexus</h1>
+          <h1 className="text-2xl font-bold text-white tracking-tight">SendApp</h1>
           <p className="text-slate-400 text-sm mt-2">Plataforma Estratégica & Formación</p>
         </div>
 
@@ -47,15 +47,15 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
               <div className="grid grid-cols-2 gap-4">
                 <button
                   type="button"
-                  onClick={() => setRole('student')}
+                  onClick={() => setRole('external')}
                   className={`p-4 rounded-xl border-2 flex flex-col items-center justify-center transition-all ${
-                    role === 'student'
+                    role === 'external'
                       ? 'border-blue-600 bg-blue-50 text-blue-700 shadow-md'
                       : 'border-gray-200 text-gray-500 hover:border-gray-300'
                   }`}
                 >
                   <GraduationCap size={24} className="mb-2" />
-                  <span className="font-semibold text-sm">Estudiante</span>
+                  <span className="font-semibold text-sm">Externo</span>
                 </button>
 
                 <button
@@ -83,7 +83,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
           </form>
           
           <p className="text-center text-xs text-gray-400 mt-6">
-            © 2024 GovStrategy Nexus. Acceso restringido.
+            © 2024 SendApp. Acceso restringido.
           </p>
         </div>
       </div>

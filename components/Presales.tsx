@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { GoNoGoCriteria, TenderAnalysisResult } from '../types';
-import { FileText, Calculator, Check, X, BarChart3, ArrowRight, ExternalLink, Database, Search, Calendar, DollarSign, Clock, Layers, Zap } from 'lucide-react';
+import { FileText, Calculator, Check, X, BarChart3, ArrowRight, ExternalLink, Database, Search, Calendar, DollarSign, Clock, Layers, Zap, History, Building2 } from 'lucide-react';
 import { evaluateTenderRisk } from '../services/geminiService';
 
 export const Presales: React.FC = () => {
@@ -69,7 +69,21 @@ const TenderAnalysis: React.FC<{
         deadline: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
         durationMonths: 12,
         requiredTechnologies: ["Big Data", "IA", "Cloud Azure", "Python", "Seguridad"],
-        riskSummary: "SIMULACIÓN: Oportunidad de alto valor alineada con la estrategia de salud digital del Gobierno Vasco. El presupuesto es adecuado y disponemos de credenciales sólidas en el sector. Riesgo técnico bajo."
+        riskSummary: "SIMULACIÓN: Oportunidad de alto valor alineada con la estrategia de salud digital del Gobierno Vasco. El presupuesto es adecuado y disponemos de credenciales sólidas en el sector. Riesgo técnico bajo.",
+        similarTenders: [
+          {
+            title: "Mantenimiento Evolutivo Historia Clínica Electrónica",
+            budget: 380000,
+            year: 2023,
+            winner: "Ibermática"
+          },
+          {
+            title: "Analítica Avanzada para Servicio Cántabro de Salud",
+            budget: 520000,
+            year: 2022,
+            winner: "Indra Minsait"
+          }
+        ]
     };
 
     setTimeout(() => {
@@ -140,7 +154,7 @@ const TenderAnalysis: React.FC<{
       </div>
 
       {/* Results Section */}
-      <div className="bg-gray-50 p-6 rounded-xl border border-gray-200 flex flex-col h-full">
+      <div className="bg-gray-50 p-6 rounded-xl border border-gray-200 flex flex-col h-full overflow-y-auto">
         <div className="flex items-center justify-between mb-6">
           <h3 className="font-bold text-gray-800">Resultado de Extracción (IA)</h3>
           {rawResult && <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full font-bold">Datos Estructurados</span>}
@@ -172,12 +186,37 @@ const TenderAnalysis: React.FC<{
                 </div>
              </div>
 
-             <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm flex-1">
+             <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
                 <h4 className="text-xs font-bold uppercase text-gray-400 mb-2">Resumen de Riesgos</h4>
                 <p className="text-sm text-gray-700 leading-relaxed">{rawResult.riskSummary}</p>
              </div>
+
+             {/* Similar Tenders Section */}
+             {rawResult.similarTenders && rawResult.similarTenders.length > 0 && (
+               <div className="bg-slate-100 p-4 rounded-lg border border-slate-200 shadow-inner">
+                  <h4 className="text-xs font-bold uppercase text-slate-500 mb-3 flex items-center">
+                    <History size={14} className="mr-1" /> Referencias Históricas
+                  </h4>
+                  <div className="space-y-2">
+                    {rawResult.similarTenders.map((tender, idx) => (
+                      <div key={idx} className="bg-white p-3 rounded border border-gray-200 flex flex-col space-y-1">
+                        <div className="flex justify-between items-start">
+                           <span className="text-xs font-bold text-gray-800 line-clamp-1" title={tender.title}>{tender.title}</span>
+                           <span className="text-[10px] bg-slate-200 px-1.5 py-0.5 rounded text-slate-600">{tender.year}</span>
+                        </div>
+                        <div className="flex justify-between items-end text-xs">
+                          <span className="text-gray-500 flex items-center">
+                            <Building2 size={10} className="mr-1" /> {tender.winner}
+                          </span>
+                          <span className="font-medium text-green-600">€{tender.budget.toLocaleString()}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+               </div>
+             )}
              
-             <div className="pt-4">
+             <div className="pt-2">
                <button 
                 onClick={onProceed}
                 className="w-full flex items-center justify-center bg-blue-600 text-white py-3 rounded-lg shadow-md text-sm font-bold hover:bg-blue-700 transition-transform active:scale-95"

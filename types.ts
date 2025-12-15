@@ -1,6 +1,6 @@
 export type View = 'dashboard' | 'strategy' | 'academy' | 'presales' | 'blog';
 
-export type UserRole = 'student' | 'employee';
+export type UserRole = 'external' | 'employee';
 
 export interface User {
   username: string;
@@ -25,6 +25,22 @@ export interface TrainingModule {
   level: 'Basic' | 'Advanced';
 }
 
+export interface CaseStudy {
+  id: string;
+  title: string;
+  description: string;
+  type: string;
+  readTime: string;
+  imageUrl: string;
+}
+
+export interface SimilarTender {
+  title: string;
+  budget: number;
+  year: number;
+  winner: string;
+}
+
 export interface TenderAnalysisResult {
   title: string;
   budget: number;
@@ -32,6 +48,7 @@ export interface TenderAnalysisResult {
   durationMonths: number;
   requiredTechnologies: string[];
   riskSummary: string;
+  similarTenders: SimilarTender[];
 }
 
 export interface Tender {

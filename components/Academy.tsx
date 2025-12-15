@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { TrainingModule } from '../types';
-import { PlayCircle, Lightbulb, Settings, Zap, Users, Shield, Cpu, Leaf, Eye, BarChart3, RefreshCw } from 'lucide-react';
+import { TrainingModule, CaseStudy } from '../types';
+import { PlayCircle, Lightbulb, Settings, Zap, Users, Shield, Cpu, Leaf, Eye, BarChart3, RefreshCw, Briefcase, BookOpen } from 'lucide-react';
 import { analyzeSimulationScenario } from '../services/geminiService';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 
 export const Academy: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'training' | 'simulator'>('training');
+  const [activeTab, setActiveTab] = useState<'training' | 'simulator' | 'cases'>('training');
   
   // Mock Data for Training
   const modules: TrainingModule[] = [
@@ -15,28 +15,63 @@ export const Academy: React.FC = () => {
     { id: '4', category: 'digital', title: 'IA Generativa para Servicios Públicos', duration: '50 min', level: 'Advanced' },
   ];
 
+  // Mock Data for Case Studies (Deloitte Style)
+  const caseStudies: CaseStudy[] = [
+    {
+      id: '1',
+      title: 'Transformación digital del sistema de salud regional',
+      description: '¿Cómo logras integrar 15 hospitales y 200 centros de salud en una única plataforma de datos en tiempo real mientras reduces las listas de espera un 15%?',
+      type: 'Caso de éxito',
+      readTime: '5 minutos de lectura',
+      imageUrl: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'
+    },
+    {
+      id: '2',
+      title: 'Ciudades Inteligentes: El caso de movilidad sostenible',
+      description: 'Implementación de sensores IoT y gemelos digitales para optimizar el flujo de tráfico y reducir emisiones en un 30% en el centro urbano.',
+      type: 'Caso de éxito',
+      readTime: '4 minutos de lectura',
+      imageUrl: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'
+    },
+    {
+      id: '3',
+      title: 'Modernización de la Hacienda Pública mediante IA',
+      description: 'Uso de algoritmos predictivos para detectar fraude fiscal y mejorar la experiencia del contribuyente mediante asistentes virtuales.',
+      type: 'Caso de éxito',
+      readTime: '6 minutos de lectura',
+      imageUrl: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'
+    }
+  ];
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center border-b border-gray-200 pb-2">
-        <div className="flex space-x-6">
+        <div className="flex space-x-6 overflow-x-auto">
           <button 
             onClick={() => setActiveTab('training')}
-            className={`pb-2 px-2 font-medium text-sm transition-colors flex items-center ${activeTab === 'training' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+            className={`pb-2 px-2 font-medium text-sm transition-colors flex items-center whitespace-nowrap ${activeTab === 'training' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
           >
             <Lightbulb size={16} className="mr-2" />
             Academy & Cursos
           </button>
           <button 
+            onClick={() => setActiveTab('cases')}
+            className={`pb-2 px-2 font-medium text-sm transition-colors flex items-center whitespace-nowrap ${activeTab === 'cases' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+          >
+            <Briefcase size={16} className="mr-2" />
+            Casos de Exito
+          </button>
+          <button 
             onClick={() => setActiveTab('simulator')}
-            className={`pb-2 px-2 font-medium text-sm transition-colors flex items-center ${activeTab === 'simulator' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+            className={`pb-2 px-2 font-medium text-sm transition-colors flex items-center whitespace-nowrap ${activeTab === 'simulator' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
           >
             <Settings size={16} className="mr-2" />
-            Panel de Simulación de Políticas
+            Simulador de Políticas
           </button>
         </div>
       </div>
 
-      {activeTab === 'training' ? (
+      {activeTab === 'training' && (
          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
          {modules.map(module => (
            <div key={module.id} className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 group hover:shadow-md transition-all">
@@ -69,7 +104,37 @@ export const Academy: React.FC = () => {
            </div>
          ))}
        </div>
-      ) : (
+      )}
+
+      {activeTab === 'cases' && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-in">
+          {caseStudies.map(study => (
+            <div key={study.id} className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 flex flex-col h-full hover:shadow-md transition-shadow">
+              <h3 className="text-xl font-bold text-gray-900 mb-4 underline decoration-2 decoration-green-400 hover:text-green-700 cursor-pointer underline-offset-4">
+                {study.title}
+              </h3>
+              
+              <p className="text-gray-600 mb-6 flex-grow leading-relaxed">
+                {study.description}
+              </p>
+              
+              <div className="text-xs font-bold text-gray-800 mb-4 flex items-center tracking-wide">
+                {study.type} <span className="mx-2 text-gray-300">|</span> <span className="text-gray-500 font-normal">{study.readTime}</span>
+              </div>
+              
+              <div className="w-full h-48 overflow-hidden rounded-md mt-auto">
+                <img 
+                  src={study.imageUrl} 
+                  alt={study.title} 
+                  className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {activeTab === 'simulator' && (
         <SimulationPanel />
       )}
     </div>

@@ -82,6 +82,7 @@ export const evaluateTenderRisk = async (tenderDescription: string): Promise<str
       "${tenderDescription}"
       
       Actúa como un Director de Preventa. Extrae los datos clave en formato JSON estrictamente.
+      Además, basándote en el tipo de proyecto, genera 2 ejemplos de licitaciones similares (históricas o plausibles en el mercado español/europeo) para tener referencia de precios y competidores.
       
       Debes devolver un JSON con la siguiente estructura:
       {
@@ -90,7 +91,15 @@ export const evaluateTenderRisk = async (tenderDescription: string): Promise<str
         "deadline": "YYYY-MM-DD" (fecha estimada futura, si no hay, pon una fecha en 15 dias),
         "durationMonths": 0 (duracion estimada del proyecto en meses),
         "requiredTechnologies": ["tech1", "tech2"],
-        "riskSummary": "Resumen de riesgos y recomendación en texto plano"
+        "riskSummary": "Resumen de riesgos y recomendación en texto plano",
+        "similarTenders": [
+          {
+            "title": "Título de licitación similar pasada",
+            "budget": 0 (presupuesto de esa licitación),
+            "year": 2023,
+            "winner": "Nombre de empresa ganadora (ej. Accenture, Indra, Deloitte, o 'Desconocido')"
+          }
+        ]
       }
     `;
 
